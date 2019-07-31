@@ -1,0 +1,470 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Password Score Estimator</title>
+	<meta name="author" content="Tobias Nickl">
+	<!-- Date: 2017-01-13 -->
+	
+	
+	<!-- CSS
+    ================================================== -->
+	<!-- Bootstrap -->
+    <link href="./dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- jQuery UI -->
+    <link href="./dist/css/jquery-ui-1.11.2.css" rel="stylesheet">
+
+	<!-- Custom -->
+    <link href="./dist/css/index.css" rel="stylesheet">
+        
+    <link rel="stylesheet" href="./dist/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./dist/css/jqmath-0.4.3.css">
+	
+</head>
+<body>
+	<!-- HTML Navigation
+    ================================================== -->
+		<div id="navigation"></div>
+
+	<!-- HTML Main Content
+    ================================================== -->
+    <div class="container">
+      <div class="content">
+        <h1><img id="headlineicon" src="./dist/gfx/pwmeter.png"/> Password Meter</h1>
+        <p class="lead">...we score your password!<br></p>
+	<div class="row">
+	  	<div class="col-md-1 hidden-sm hidden-xs"></div>
+	  	<div class="col-md-10 col-sm-9 col-xs-12">
+			<!--Optionen-->
+			<button type="button" class="btn btn-primary btn-xs showIncludeIngredient floatLeft">options</button>
+		</div>
+		<div class="col-md-1 hidden-sm hidden-xs"></div>
+	</div>
+	
+	
+	<!--Suchfeld -->
+	<div class="row">
+	  	<div class="col-md-1 hidden-sm hidden-xs"></div>
+	  	<div id="searchInputDiv" class="col-md-8 col-sm-9 col-xs-12">
+			<input class="form-control" id="passwordSearch" placeholder="Enter your best password...">
+		</div>
+		<div id="searchButtonDiv" class="col-md-2 col-sm-3 col-xs-12">
+			<button id="searchButton" type="button" class="btn btn-primary btn-lg">
+			<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> Score</button>
+		</div>
+		<div class="col-md-1 hidden-sm hidden-xs"></div>
+	</div>
+	
+	<div id="passwordOptionsMask">
+		<!--Password Options -->
+		<div class="row">
+		  	<div class="col-md-1"></div>
+		  	<div  class="col-md-10 col-sm-12 col-xs-12">
+                <div class="btn-group floatLeft" data-toggle="buttons">
+                  <label class="btn btn-primary active passwordOptionButton">
+                    <input id="scoreDetails" type="checkbox" checked autocomplete="off"> <i class="fa fa-search" aria-hidden="true"></i>
+                  </label>
+                  <label class="btn btn-primary passwordOptionButton">
+                    <input id="scoreNormalization" type="checkbox" autocomplete="off"><i class="fa fa-area-chart fa-1x" aria-hidden="true"></i>
+                  </label>
+                  <label class="btn btn-primary passwordOptionButton">
+                    <input id="scoreLevelFusion" type="checkbox" autocomplete="off"><i class="fa fa-tasks" aria-hidden="true"></i>
+                  </label>
+                  <label class="btn btn-primary passwordOptionButton">
+                    <input id="scoreTraining" type="checkbox" autocomplete="off"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                  </label>
+                  <label class="btn btn-primary passwordOptionButton">
+                    <input id="scoreStrength" type="checkbox" autocomplete="off"><i class="fa fa-wrench" aria-hidden="true"></i>
+                  </label>
+                  
+                  
+                </div>
+			</div>
+			<div class="col-md-1 hidden-sm hidden-xs"></div>
+		</div>
+		
+		<!--Meta Filter Area -->
+		
+		<div class="row">
+		  	<div class="col-md-1"></div>
+			<div class="metaFilterContent"></div>
+			<div class="col-md-1"></div>
+		</div>
+		<div class="row">
+		  	<div class="col-md-1"></div>
+			<div class="metaFilterContent2"></div>
+			<div class="col-md-1"></div>
+		</div>
+		
+		
+	</div>
+    
+    <!-- Final Score -->
+    <div class="row finalScoreArea">
+        <div class="col-md-4"></div>        
+        <div class="col-md-4 centerElement finalScore">
+            <div class="col-md-1 col-sm-0 col-xs-0"></div>
+            <div class="col-md-10 col-sm-12 col-xs-12 finalFrame">
+                <div class="col-md-12"><h1 id="finalScoreH1">10.0<h1></div>
+                <div class="col-md-12"><h6>( out of 10 )</h6></div>
+                <div class="col-md-12"><h4>Final Score</h4></div>
+            </div>
+            <div class="col-md-1 col-sm-0 col-xs-0"></div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    
+    
+    
+    
+    <!-- Scores Details-->
+    <div class="scoreDetailsArea">
+        <hr>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 centerElement">
+                <h2><i class="fa fa-search" aria-hidden="true"></i> Score-Details:</h2>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        
+        
+        <div class="row scoreArea">
+            <div class="col-md-3">
+                <div class="col-md-1 col-sm-0 col-xs-0"></div>
+                <div class="col-md-10 col-sm-12 col-xs-12 subFrame">
+                    <div class="col-md-12"><img id="headlineicon" src="./dist/gfx/dic.png"/></div>
+                    <div class="col-md-12"><h6>Password based</h6></div>
+                    <div class="col-md-12"><h3 id="subScorePB">10.0<h3></div>
+                    <div class="col-md-12"><p id="subScoreOf10">( out of 10 )</p></div>
+                </div>
+                <div class="col-md-1 col-sm-0 col-xs-0"></div>
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-1 col-sm-0 col-xs-0"></div>
+                <div class="col-md-10 col-sm-12 col-xs-12 subFrame">
+                    <div class="col-md-12"><h2 id="subHeadHeuristic">A-Z</h2></div>
+                    <div class="col-md-12"><h6>Heuristic</h6></div>
+                    <div class="col-md-12"><h3 id="subScoreBF">10.0<h3></div>
+                    <div class="col-md-12"><p id="subScoreOf10">( out of 10 )</p></div>
+
+                </div>
+                <div class="col-md-1 col-sm-0 col-xs-0"></div>
+                
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-1 col-sm-0 col-xs-0"></div>
+                <div class="col-md-10 col-sm-12 col-xs-12 subFrame">
+                    <div class="col-md-12"><img id="headlineicon" src="./dist/gfx/am.png"/></div>
+                    <div class="col-md-12"><h6>Adaptive Memory</h6></div>
+                    <div class="col-md-12"><h3 id="subScoreAM">10.0<h3></div>
+                    <div class="col-md-12"><p id="subScoreOf10">( out of 10 )</p></div>
+                </div>
+                <div class="col-md-1 col-sm-0 col-xs-0"></div>
+                
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-1 col-sm-0 col-xs-0"></div>
+                <div class="col-md-10 col-sm-12 col-xs-12 subFrame">
+                    <div class="col-md-12"><img id="headlineicon" src="./dist/gfx/hs.png"/></div>
+                    <div class="col-md-12"><h6>Higher Structure</h6></div>
+                    <div class="col-md-12"><h3 id="subScoreHS">10.0<h3></div>
+                    <div class="col-md-12"><p id="subScoreOf10">( out of 10 )</p></div>
+                </div>
+                <div class="col-md-1 col-sm-0 col-xs-0"></div>
+                
+            </div>
+        </div>
+    </div>
+    
+    <!--Score Normalization -->
+    <div class="scoreNormalizationArea">
+        <hr>
+        <div class="row">
+          <div class="col-md-3"></div>
+          
+          <div class="col-md-6 centerElement"><h2>Score Normalization</h2><h4>(for Adaptive Memory and Higher Structure)</h4></div>
+          <div class="col-md-3"></div>
+        </div>
+        
+        <!-- Graph -->
+        <div class="row">
+            <div class="col-md-8">
+                <div id='quadratic'><h3>Graph:</h3></div>
+            </div>
+          
+            <div class="col-md-4">
+                <h3>Parameter:</h3>
+                <h4>\[ s_\k = {5*(tanh({{0.01} * {s_\k - &mu;_\GH} / {&#x3C3;_\GH}})+1)}\]</h4>
+                <!-- ugh spinner -->
+                <div class="ugh-spinner">
+                <h2>&mu;<sub>GH</sub><h2>
+                <div class="input-group number-spinner-ugh">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default spinner-white" data-dir="dwn"><span class="glyphicon glyphicon-minus"></span></button>
+                    </span>
+                    <input type="text" class="form-control text-center number-spinner-ugh-value spinner-white" value="180">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default spinner-white" data-dir="up"><span class="glyphicon glyphicon-plus"></span></button>
+                    </span>
+                </div>
+                </div>
+                
+                <!-- ogh spinner -->
+                <div class="ugh-spinner">
+                <h2>&#x3C3;<sub>GH</sub><h2>
+                <div class="input-group number-spinner-ogh">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default spinner-white" data-dir="dwn"><span class="glyphicon glyphicon-minus"></span></button>
+                    </span>
+                    <input type="text" class="form-control text-center number-spinner-ogh-value spinner-white" value="1.5">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default spinner-white" data-dir="up"><span class="glyphicon glyphicon-plus"></span></button>
+                    </span>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <!--Score Level Fusion -->
+    <div class="scoreLevelFusionArea">
+    <hr>
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8 centerElement"><h2>Score-level Fusion</h2><h4>(for Adaptive Memory, Higher Structure, Heuristic and Password based)</h4><h4>\[\text"Final Score" = s_\H/10 * s_\D/10 * ∑↙{k=1}↖K w_\k * s_\k \;\;\;;∑↙{k=1}↖K w_\k = 1\]</h4>
+           
+          </div>
+
+          <div class="col-md-2"></div>
+        </div>
+        
+        <div class="row scoreArea">
+            <div class="col-md-3">
+                <div class="col-md-1 col-sm-0 col-xs-0"></div>
+                <div class="col-md-10 col-sm-12 col-xs-12 subFrame">
+                    <div class="col-md-12"><img id="headlineicon" src="./dist/gfx/dic.png"/></div>
+                    <div class="col-md-12"><h6>Password based</h6></div>
+                    <div class="col-md-12">
+                        <div class="row">
+                          <div class="col-md-2 scoreLevelS">&omega;<sub>1</sub>=</div>
+                          <div class="col-md-8 centerElement"><input type="text" value="0.3" class="form-control fustionScoreDic blueInput" placeholder="0.0-1.0"></div>
+                          <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1 col-sm-0 col-xs-0"></div>
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-1 col-sm-0 col-xs-0"></div>
+                <div class="col-md-10 col-sm-12 col-xs-12 subFrame">
+                    <div class="col-md-12"><h2 id="subHeadHeuristic">A-Z</h2></div>
+                    <div class="col-md-12"><h6>Heuristic</h6></div>
+                    <div class="col-md-12">
+                        <div class="row">
+                          <div class="col-md-2 scoreLevelS">&omega;<sub>2</sub>=</div>
+                          <div class="col-md-8 centerElement"><input type="text" value="0.3" class="form-control fustionScoreBF blueInput" placeholder="0.0-1.0"></div>
+                          <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1 col-sm-0 col-xs-0"></div>
+                
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-1 col-sm-0 col-xs-0"></div>
+                <div class="col-md-10 col-sm-12 col-xs-12 subFrame">
+                    <div class="col-md-12"><img id="headlineicon" src="./dist/gfx/am.png"/></div>
+                    <div class="col-md-12"><h6>Adaptive Memory</h6></div>
+                    <div class="col-md-12">
+                        <div class="row">
+                          <div class="col-md-2 scoreLevelS">&omega;<sub>3</sub>=</div>
+                          <div class="col-md-8 centerElement"><input type="text" value="0.2" class="form-control fustionScoreAM blueInput" placeholder="0.0-1.0"></div>
+                          <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1 col-sm-0 col-xs-0"></div>
+                
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-1 col-sm-0 col-xs-0"></div>
+                <div class="col-md-10 col-sm-12 col-xs-12 subFrame">
+                    <div class="col-md-12"><img id="headlineicon" src="./dist/gfx/hs.png"/></div>
+                    <div class="col-md-12"><h6>Higher Structure</h6></div>
+                    <div class="col-md-12">
+                        <div class="row">
+                          <div class="col-md-2 scoreLevelS">&omega;<sub>4</sub>=</div>
+                          <div class="col-md-8 centerElement"><input type="text" value="0.2" class="form-control fustionScoreHS blueInput" placeholder="0.0-1.0"></div>
+                          <div class="col-md-2"></div>
+                        </div>                
+                    </div>
+                </div>
+                <div class="col-md-1 col-sm-0 col-xs-0"></div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <!--Score Training -->
+    <div class="scoreTrainingArea">
+        <hr>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 centerElement">
+                <h2>Score Training</h2><h4>(for Password based, Adaptive Memory and Higher Structure)</h4>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="comment">Password based:</label>
+                    <textarea class="form-control areaDicValue" rows="5" placeholder="e.g. password" ></textarea>
+                </div>
+            </div>
+            <div class="col-md-4 centerElement">
+                <div class="form-group">
+                    <label for="comment">Adaptive Memory:</label>
+                    <textarea class="form-control areaAMValue" rows="5" placeholder="e.g. Jessica" ></textarea>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="comment">Higher Structure:</label>
+                    <textarea class="form-control areaHSValue" rows="5" placeholder="e.g. asdf1234@" ></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--Score Strength -->
+    <div class="scoreStrengthArea">
+        <hr>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 centerElement">
+                <h2>Score Strength</h2><h4>(for Heuristic, Adatpive Memory, Higher Structure)</h4>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="col-md-1 col-sm-0 col-xs-0"></div>
+                <div class="col-md-10 col-sm-12 col-xs-12 subFrame">
+                    <div class="col-md-12"><h2 id="subHeadHeuristic">A-Z</h2></div>
+                    <div class="col-md-12">
+                        <div class="row">
+                          <div class="col-md-12 ">\[ L_\Min = {log(NoG_\max * T_\max)} / {log(N)}\] </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-3 scoreLevelS">N</div>
+                          <div class="col-md-7 centerElement"><input type="text" class="form-control strengthBFN blueInput" value="94" placeholder="94"></div>
+                          <div class="col-md-2"></div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-3 scoreLevelS">NoG<sub>max</sub></div>
+                          <div class="col-md-7 centerElement"><input type="text" class="form-control strengthBFNOGMAX blueInput" value = "100000000"placeholder="100000000"></div>
+                          <div class="col-md-2"></div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-3 scoreLevelS">T<sub>max</sub></div>
+                          <div class="col-md-7 centerElement"><input type="text" class="form-control strengthBFTMAX blueInput" value="32140800"placeholder="32140800"></div>
+                          <div class="col-md-2"></div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-3 scoreLevelS">L<sub>min</sub>&nbsp;=</div>
+                          <div class="col-md-7 centerElement"><h4 id='strengthBFResult'>8</h4></div>
+                          <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><h6>Heuristic</h6></div>
+                </div>
+                <div class="col-md-1 col-sm-0 col-xs-0"></div>
+            </div>
+            <div class="col-md-4 centerElement">
+                <div class="col-md-1 col-sm-0 col-xs-0"></div>
+                <div class="col-md-10 col-sm-12 col-xs-12 subFrame">
+                    <div class="col-md-12"><img id="headlineicon" src="./dist/gfx/am.png"/></div>
+                    <div class="col-md-12"><h6>Adaptive Memory</h6></div>
+                    <div class="col-md-12">
+                        <div class="row">
+                          <div class="col-md-3 scoreLevelS">AM<sub>max</sub></div>
+                          <div class="col-md-6 centerElement"><input type="text" class="form-control strengthAMMAX blueInput" value="4" placeholder="4"></div>
+                          <div class="col-md-3"></div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-1 scoreLevelS"></div>
+                          <div class="col-md-10"><h3>e.g. ananas</h3></div>
+                          <div class="col-md-1"></div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-3 scoreLevelS"></div>
+                          <div class="col-md-6 centerElement adaptiveWordSplit"><br>→ An<br>→ na<br>→ an<br>→ na<br>→ as</div>
+                          <div class="col-md-3"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="col-md-1 col-sm-0 col-xs-0"></div>
+            </div>
+            <div class="col-md-4">
+                <div class="col-md-1 col-sm-0 col-xs-0"></div>
+                <div class="col-md-10 col-sm-12 col-xs-12 subFrame">
+                    <div class="col-md-12"><img id="headlineicon" src="./dist/gfx/hs.png"/></div>
+                    <div class="col-md-12"><h6>Higher Structure</h6></div>
+                    <div class="col-md-12">
+                        <div class="row">
+                          <div class="col-md-3 scoreLevelS">lc<sub>max</sub></div>
+                          <div class="col-md-6 centerElement"><input type="text" class="form-control blueInput" value="6" placeholder="6"></div>
+                          <div class="col-md-3"></div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-3 scoreLevelS">dc<sub>max</sub></div>
+                          <div class="col-md-6 centerElement"><input type="text" class="form-control blueInput" value="6" placeholder="6"></div>
+                          <div class="col-md-3"></div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-3 scoreLevelS">sc<sub>max</sub></div>
+                          <div class="col-md-6 centerElement"><input type="text" class="form-control blueInput" value="6" placeholder="6"></div>
+                          <div class="col-md-3"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1 col-sm-0 col-xs-0"></div>
+
+            </div>
+        </div>
+    </div>
+    </div><!-- /.container -->
+
+    <!-- JavaScript
+    ================================================== -->
+
+    <!-- jQuery -->
+	<script src="./dist/js/jquery-1.12.4.min.js"></script>
+    <!-- jQuery UI -->
+    <script src="./dist/js/jquery-ui-1.11.2.min.js"></script>
+	<!-- Bootstrap -->
+    <script src="./dist/js/bootstrap.min.js"></script>
+    <!-- Function Plot -->
+    <script src="./dist/js/d3.v3.min.js"></script>
+    <script src="./dist/js/function-plot.js"></script>
+    <!-- Custom -->
+    <script src="./dist/js/index.js"></script>
+    <!-- Number animation -->
+    <script src="./dist/js/jquery.animateNumber.min.js"></script>
+    <!-- jqmath -->
+    <script src="./dist/js/jqmath-etc-0.4.5.min.js"></script>
+
+
+
+</body>
+</html>

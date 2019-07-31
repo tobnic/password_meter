@@ -1,0 +1,132 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXFileReference section */
+		F6095DA71E2685DA00C63D39 /* score.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = score.php; path = ../score.php; sourceTree = "<group>"; };
+		F6095DA81E26AB9B00C63D39 /* index.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = index.css; path = ../dist/css/index.css; sourceTree = "<group>"; };
+		F6095DA91E26AB9B00C63D39 /* index.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = index.js; path = ../dist/js/index.js; sourceTree = "<group>"; };
+		F6095DAA1E26ABA000C63D39 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = index.html; path = ../index.html; sourceTree = "<group>"; };
+		F626FC251E23970C00D2C325 /* training_data_higherstruct.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = training_data_higherstruct.txt; sourceTree = "<group>"; };
+		F626FC261E23970C00D2C325 /* lib_higher_strucutre.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = lib_higher_strucutre.py; sourceTree = "<group>"; };
+		F626FC271E23970C00D2C325 /* pwd_score_estimator.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = pwd_score_estimator.py; sourceTree = "<group>"; };
+		F626FC281E23973700D2C325 /* input_pwds.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input_pwds.txt; sourceTree = "<group>"; };
+		F626FC291E23F0F900D2C325 /* lib_adaptive_memory.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = lib_adaptive_memory.py; sourceTree = "<group>"; };
+		F626FC2A1E23F0F900D2C325 /* training_data_adaptive.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = training_data_adaptive.txt; sourceTree = "<group>"; };
+		F626FC2D1E25593D00D2C325 /* training_data_trivial_pwds.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = training_data_trivial_pwds.txt; sourceTree = "<group>"; };
+		F626FC2E1E255E1200D2C325 /* lib_trivial_pwd.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = lib_trivial_pwd.py; sourceTree = "<group>"; };
+		F626FC2F1E25649500D2C325 /* lib_brute_force.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = lib_brute_force.py; sourceTree = "<group>"; };
+		F665D9351E293460005CA9D5 /* playground.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = playground.py; sourceTree = "<group>"; };
+		F665D9381E2944E1005CA9D5 /* write_ini.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = write_ini.php; path = ../write_ini.php; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		F626FC1E1E23970700D2C325 = {
+			isa = PBXGroup;
+			children = (
+				F69BA4321E2A31D30007A574 /* Web */,
+				F69BA4311E2A31BD0007A574 /* PY */,
+			);
+			sourceTree = "<group>";
+		};
+		F626FC2B1E23F10000D2C325 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				F626FC261E23970C00D2C325 /* lib_higher_strucutre.py */,
+				F626FC291E23F0F900D2C325 /* lib_adaptive_memory.py */,
+				F626FC2E1E255E1200D2C325 /* lib_trivial_pwd.py */,
+				F626FC2F1E25649500D2C325 /* lib_brute_force.py */,
+			);
+			name = lib;
+			sourceTree = "<group>";
+		};
+		F626FC2C1E23F10A00D2C325 /* dataset */ = {
+			isa = PBXGroup;
+			children = (
+				F626FC2D1E25593D00D2C325 /* training_data_trivial_pwds.txt */,
+				F626FC251E23970C00D2C325 /* training_data_higherstruct.txt */,
+				F626FC2A1E23F0F900D2C325 /* training_data_adaptive.txt */,
+			);
+			name = dataset;
+			sourceTree = "<group>";
+		};
+		F69BA4311E2A31BD0007A574 /* PY */ = {
+			isa = PBXGroup;
+			children = (
+				F665D9351E293460005CA9D5 /* playground.py */,
+				F626FC271E23970C00D2C325 /* pwd_score_estimator.py */,
+				F626FC281E23973700D2C325 /* input_pwds.txt */,
+				F626FC2C1E23F10A00D2C325 /* dataset */,
+				F626FC2B1E23F10000D2C325 /* lib */,
+			);
+			name = PY;
+			sourceTree = "<group>";
+		};
+		F69BA4321E2A31D30007A574 /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				F6095DA71E2685DA00C63D39 /* score.php */,
+				F665D9381E2944E1005CA9D5 /* write_ini.php */,
+				F6095DAA1E26ABA000C63D39 /* index.html */,
+				F6095DA91E26AB9B00C63D39 /* index.js */,
+				F6095DA81E26AB9B00C63D39 /* index.css */,
+			);
+			name = Web;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		F626FC1F1E23970700D2C325 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+			};
+			buildConfigurationList = F626FC221E23970700D2C325 /* Build configuration list for PBXProject "Score Estimator Web" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F626FC1E1E23970700D2C325;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		F626FC231E23970700D2C325 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		F626FC241E23970700D2C325 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F626FC221E23970700D2C325 /* Build configuration list for PBXProject "Score Estimator Web" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F626FC231E23970700D2C325 /* Debug */,
+				F626FC241E23970700D2C325 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F626FC1F1E23970700D2C325 /* Project object */;
+}
